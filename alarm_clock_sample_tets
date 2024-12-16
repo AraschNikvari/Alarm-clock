@@ -1,0 +1,30 @@
+from datetime import datetime, timedelta
+
+# Function to calculate the time difference
+def calculate_alarm_time(t1_str, t2_str):
+    # Parse the input times
+    t1 = datetime.strptime(t1_str, '%H:%M:%S')
+    t2 = datetime.strptime(t2_str, '%H:%M:%S')
+
+    # If t1 is equal to t2, set t2 to the next day
+    if t1 == t2:
+        t2 += timedelta(days=1)
+    elif t1 > t2:
+        # If t1 is greater than t2, add one day to t2 to get the next occurrence
+        t2 += timedelta(days=1)
+
+    # Calculate the time difference
+    time_difference = t2 - t1
+
+    # Format the difference as HH:MM:SS
+    hours, remainder = divmod(time_difference.total_seconds(), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    
+    return f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}"
+
+# Example input
+input_t1 = '03:05:18'
+input_t2 = '09:30:00'
+
+# Output the calculated time
+print(calculate_alarm_time(input_t1, input_t2))
